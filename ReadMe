@@ -1,6 +1,5 @@
 This is spring boot project for Java Task assigned to me by Destm
 
 Sample URLs :-
-Count of distinct UserIds :- GET http://localhost:8080/users/countOfUniqueUserIds
-Count of distinct UserIds :- GET http://localhost:8080/users/count
+Count of distinct UserIds :- GET http://localhost:8080/users/count?byObjectNature=true
 Modify Content by index :- http://localhost:8080/users/modify/{indexNo}/{value} --> GET http://localhost:8080/users/modify/1000/22
