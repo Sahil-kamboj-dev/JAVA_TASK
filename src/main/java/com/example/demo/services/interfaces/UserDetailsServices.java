@@ -8,4 +8,6 @@ public interface UserDetailsServices {
 
 	public ResponseEntity<UserDetails[]> getUserDetails();
 	public UserDetails[] modifyData(Integer indexNo, String value,UserDetails[] userDetails);
+	public long countUserIdsByClassNature(UserDetails[] userDetails);
+	public long countUserIdsByOtherLogic(UserDetails[] userDetails);
 }

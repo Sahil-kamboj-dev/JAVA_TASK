@@ -1,5 +1,9 @@
 package com.example.demo.services.impl;
 
+import java.util.HashSet;
+import java.util.Set;
+import java.util.stream.Stream;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpEntity;
 import org.springframework.http.HttpMethod;
@@ -29,6 +33,26 @@ public class UserDetailsServicesImpl implements UserDetailsServices{
 		userDetails[indexNo].setBody(value);
 		userDetails[indexNo].setTitle(value);
 		return userDetails;
+	}
+
+	@Override
+	public long countUserIdsByClassNature(UserDetails[] userDetails) {
+		return Stream.of(userDetails).distinct().count();
+	}
+
+	@Override
+	public long countUserIdsByOtherLogic(UserDetails[] userDetails) {
+		Set<Integer> setOfUserIds = new HashSet<Integer>();
+
+		long result = Stream.of(userDetails).filter(e -> {
+			if (setOfUserIds.contains(e.getUserId()))
+				return false;
+			else {
+				setOfUserIds.add(e.getUserId());
+				return true;
+			}
+		}).count();
+		return result;
 	}
 
 }
