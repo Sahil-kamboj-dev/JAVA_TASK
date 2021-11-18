@@ -1,6 +1,6 @@
-This is spring bootnproject  for Java Task assigned to me by Destm
+This is spring boot project for Java Task assigned to me by Destm
 
 Sample URLs :-
-Count of distinct UserIds :- GET http://localhost:8080//countOfUniqueUserIds
-Count of distinct UserIds :- GET http://localhost:8080/count
-Modify Content by index :- http://localhost:8080/modify/indexNo/value --> GET http://localhost:8080/modify/1000/22
+Count of distinct UserIds :- GET http://localhost:8080/users/countOfUniqueUserIds
+Count of distinct UserIds :- GET http://localhost:8080/users/count
+Modify Content by index :- http://localhost:8080/users/modify/{indexNo}/{value} --> GET http://localhost:8080/users/modify/1000/22
