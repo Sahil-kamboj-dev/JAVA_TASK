@@ -1,10 +1,7 @@
 package com.example.demo.controllers.rest;
 
-import java.util.Arrays;
-import java.util.HashSet;
+import java.util.List;
 import java.util.Optional;
-import java.util.Set;
-import java.util.stream.Stream;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
@@ -17,7 +14,7 @@ import org.springframework.web.bind.annotation.RestController;
 
 import com.example.demo.model.UserDetails;
 import com.example.demo.model.response.ResponseUserDetails;
-import com.example.demo.services.interfaces.UserDetailsServices;
+import com.example.demo.services.impl.UserDetailsServicesImpl;
 
 @RestController
 @RequestMapping("/users")
@@ -25,7 +22,13 @@ public class UserDetailsRestController {
 	
 	public static final String ERROR_MESSAGE = "Requested Index Out of Bound";
 	
-	@Autowired UserDetailsServices userDetailsServices;
+	@Autowired UserDetailsServicesImpl userDetailsServices;
+	
+	@GetMapping("/data")
+	public List<UserDetails> getUserDetails() {
+		
+		return userDetailsServices.getUserDetails();
+	}
 	
 /*
  * Count on the basis of distinct method
@@ -38,20 +41,19 @@ public class UserDetailsRestController {
 */
 	@GetMapping("/count")
 	public long getCount(@RequestParam Optional<Boolean> byObjectNature ) {
-		ResponseEntity<UserDetails[]> responseUserDetails = userDetailsServices.getUserDetails();
+		List<UserDetails> responseUserDetails = getUserDetails();
 		long res;
-		if(byObjectNature.isPresent() && byObjectNature.get()) {
-			res = userDetailsServices.countUserIdsByClassNature(responseUserDetails.getBody());
+		if(byObjectNature != null && byObjectNature.isPresent() && byObjectNature.get()) {
+			res = userDetailsServices.countUserIdsByClassNature(responseUserDetails);
 		}else {
-			res = userDetailsServices.countUserIdsByOtherLogic(responseUserDetails.getBody());
+			res = userDetailsServices.countUserIdsByOtherLogic(responseUserDetails);
 		}
 		return res;
 	}
 
 	@GetMapping("/modify/{indexNo}/{value}")
 	public Object getModifiedData(@PathVariable Integer indexNo,@PathVariable String value) {
-		ResponseEntity<UserDetails[]> responseGetUserDetails = userDetailsServices.getUserDetails();
-		UserDetails[] userDetails = responseGetUserDetails.getBody();
+		List<UserDetails> userDetails = getUserDetails();
 		try{
 			userDetails = userDetailsServices.modifyData(indexNo, value, userDetails);
 			
@@ -59,7 +61,7 @@ public class UserDetailsRestController {
 			return new ResponseEntity<Object>(ERROR_MESSAGE + "\n" + e.getMessage(),HttpStatus.BAD_REQUEST);
 		}
 		ResponseUserDetails res =new ResponseUserDetails();
-		res.setUserDetails(Arrays.asList(userDetails));
+		res.setUserDetails(userDetails);
 		
 		return new ResponseEntity<Object>(res,HttpStatus.OK);
 	}

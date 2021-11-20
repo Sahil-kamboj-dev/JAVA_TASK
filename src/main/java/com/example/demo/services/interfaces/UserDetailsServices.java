@@ -1,13 +1,12 @@
 package com.example.demo.services.interfaces;
 
-import org.springframework.http.ResponseEntity;
+import java.util.List;
 
 import com.example.demo.model.UserDetails;
 
 public interface UserDetailsServices {
-
-	public ResponseEntity<UserDetails[]> getUserDetails();
-	public UserDetails[] modifyData(Integer indexNo, String value,UserDetails[] userDetails);
-	public long countUserIdsByClassNature(UserDetails[] userDetails);
-	public long countUserIdsByOtherLogic(UserDetails[] userDetails);
+	public List<UserDetails> getUserDetails();
+	public List<UserDetails> modifyData(Integer indexNo, String value,List<UserDetails> userDetails);
+	public long countUserIdsByClassNature(List<UserDetails> userDetails);
+	public long countUserIdsByOtherLogic(List<UserDetails> userDetails);
 }

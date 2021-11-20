@@ -11,6 +11,15 @@ public class UserDetails {
 	private Integer id;
 	private String title;
 	private String body;
+	
+	public UserDetails() {}
+	public UserDetails(Integer userId, Integer id, String title, String body) {
+		super();
+		this.userId = userId;
+		this.id = id;
+		this.title = title;
+		this.body = body;
+	}
 	public Integer getUserId() {
 		return userId;
 	}
